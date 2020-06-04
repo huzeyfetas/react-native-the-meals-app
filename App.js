@@ -8,13 +8,10 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import MealsNavigator from './navigation/MealsNavigator';
 
 const App: () => React$Node = () => {
-  return (
-    <View>
-      <Text>app2</Text>
-    </View>
-  );
+  return <MealsNavigator />;
 };
 
 const styles = StyleSheet.create({});
