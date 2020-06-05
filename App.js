@@ -9,6 +9,10 @@ import {
   StatusBar,
 } from 'react-native';
 import MealsNavigator from './navigation/MealsNavigator';
+import {enableScreens} from 'react-native-screens';
+
+enableScreens();
+//bu enableScreen ile sanki bir ekran geçiş efekti değişti ?
 
 const App: () => React$Node = () => {
   return <MealsNavigator />;
