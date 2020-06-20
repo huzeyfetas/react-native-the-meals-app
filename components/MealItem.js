@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
   mealItem: {
     height: 200,
     width: '100%',
-    backgroundColor: '#94bcff',
+    backgroundColor: 'yellow',
     borderRadius: 10,
     overflow: 'hidden', //bu sayede child componentler dışarı taşmıyor.
-    marginBottom: 10, // H
+    marginVertical: 20,
     // borderRadius: 10,
     // padding: 20,
     // alignItems: 'center',

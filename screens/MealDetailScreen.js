@@ -1,7 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+// import Fontisto from 'react-native-vector-icons/Fontisto';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {MEALS} from '../data/dummy-data';
+import HeaderButton from '../components/HeaderButtons';
 
 const MealDetailScreen = props => {
   const mealId = props.navigation.getParam('mealId');
@@ -9,6 +12,7 @@ const MealDetailScreen = props => {
   return (
     <View style={styles.screen}>
       <Text>{selectedMeal.title} </Text>
+      {/* <Fontisto name="star" size={20} color="#4F8EF7" /> */}
     </View>
   );
 };
@@ -20,6 +24,15 @@ MealDetailScreen.navigationOptions = navigationData => {
 
   return {
     headerTitle: selectedMeal.title,
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Favorite"
+          iconName="star"
+          onPress={() => console.log('star tiklandi ??')}
+        />
+      </HeaderButtons>
+    ),
   };
 };
 
