@@ -37,7 +37,10 @@ const styles = StyleSheet.create({
     height: 150,
     margin: 10,
     borderRadius: 10,
-    overflow: 'hidden', //buradaki borderradius ve overlow containerdeki borderradius ile aynı degerde olmalı
+    overflow: Platform.OS === 'android' && Platform.Version >= 21 ? 'hidden' : 'visible',
+    //buradaki borderradius ve overlow containerdeki borderradius ile aynı degerde olmalı
+    // Platforma göre yazmamızın sebebi android ve ios daki  overflow kırpması bunun için elevation burada yazıldı.
+    elevation: 5,
   },
   container: {
     flex: 1,
@@ -49,7 +52,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: {width: 1, height: 1},
     shadowRadius: 8,
-    elevation: 5,
   },
   textStyle: {
     fontSize: 22,
