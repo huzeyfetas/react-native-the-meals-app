@@ -11,6 +11,7 @@ import Colors from '../constants/Colors';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Platform} from 'react-native';
+import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 
 const MealsNavigator = createStackNavigator(
   {
@@ -44,41 +45,46 @@ const MealsNavigator = createStackNavigator(
   },
 );
 
-const MealFavTabNavigator = createBottomTabNavigator(
-  {
-    Meal: {
-      screen: MealsNavigator,
-      navigationOptions: {
-        tabBarLabel:'Restorant',
-        tabBarIcon: tabInfo => {
-          return (
-            <Ionicons
-              name="ios-restaurant"
-              size={25}
-              color={tabInfo.tintColor}
-            />
-          );
-        },
+const tabScreenConfig = {
+  Meal: {
+    screen: MealsNavigator,
+    navigationOptions: {
+      tabBarLabel: 'Restorant',
+      tabBarIcon: tabInfo => {
+        return (
+          <Ionicons name="ios-restaurant" size={25} color={tabInfo.tintColor} />
+        );
       },
-    },
-    Favorites: {
-      screen: FavoritesScreen,
-      navigationOptions: {
-        tabBarLabel:'Favorilerim',
-        tabBarIcon: tabInfo => {
-          return (
-            <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />
-          );
-        },
-      },
+      tabBarColor: Colors.primaryColor, //ios tarafından okunmaz bu kodlar sadece android okuyor. material button içinden olan navigator ile
     },
   },
-  {
-    tabBarOptions: {
-      inactiveTintColor: 'gray',
-      activeTintColor: Colors.accentColor,
+  Favorites: {
+    screen: FavoritesScreen,
+    navigationOptions: {
+      tabBarLabel: 'Favorilerim',
+      tabBarIcon: tabInfo => {
+        return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />;
+      },
+      tabBarColor: 'purple', //ios tarafından okunmaz bu kodlar sadece android okuyor. material button içinden olan navigator ile
     },
   },
-);
+};
+
+const MealFavTabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        activeColor: Colors.accentColor,
+        shifting: true, //icon büyüyüp kücülüyor //bunu false yapacaksa kötü durur diye ayrıca bir de barStyle keyi ile değer ekliyoruz. ama true olacaksa buna gerek yok shift ile barStyle birlikte calısmaz biri true ise diğeri yok biri varsa diğer false
+
+        barStyle: {
+          backgroundColor: 'black',
+        },
+      })
+    : createBottomTabNavigator(tabScreenConfig, {
+        tabBarOptions: {
+          inactiveTintColor: 'gray',
+          activeTintColor: Colors.accentColor,
+        },
+      });
 
 export default createAppContainer(MealFavTabNavigator);
