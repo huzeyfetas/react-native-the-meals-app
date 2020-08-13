@@ -12,14 +12,24 @@ import FiltersScreen from '../screens/FiltersScreen';
 import Colors from '../constants/Colors';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Platform} from 'react-native';
+import {Platform, Text} from 'react-native';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import {HeaderButton, Item} from 'react-navigation-header-buttons';
 import HeaderButtons from '../components/HeaderButtons';
 
 const defaultStackNavigationOptions = {
   headerTitleAlign: 'center',
+  headerTitleStyle: {
+    fontSize: 22,
+    fontFamily: 'OpenSans-Bold',
+  },
+  headerBackTitleStyle: {
+    fontSize: 20,
+    fontFamily: 'OpenSans-Regular',
+  },
+  //headerStyle:{backgroundColor: platform. da verilebilirdi}
   headerTintColor: Platform.OS === 'android' ? 'black' : 'black',
+  headerTitle: 'A Screen', // özellikle isim vermezsek bunu yazar,
 };
 
 const MealsNavigator = createStackNavigator(
@@ -72,6 +82,12 @@ const tabScreenConfig = {
         );
       },
       tabBarColor: Colors.primaryColor, //ios tarafından okunmaz bu kodlar sadece android okuyor. material button içinden olan navigator ile
+      tabBarLabel:
+        Platform.OS === 'android' ? (
+          <Text style={{fontWeight: 'bold'}}>Meals</Text>
+        ) : (
+          'Meals'
+        ),
     },
   },
   Favorites: {
@@ -82,6 +98,12 @@ const tabScreenConfig = {
         return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />;
       },
       tabBarColor: 'purple', //ios tarafından okunmaz bu kodlar sadece android okuyor. material button içinden olan navigator ile
+      tabBarLabel:
+        Platform.OS === 'android' ? (
+          <Text style={{fontWeight: 'bold'}}>Meals</Text>
+        ) : (
+          'Meals'
+        ),
     },
   },
 };
@@ -91,7 +113,6 @@ const MealFavTabNavigator =
     ? createMaterialBottomTabNavigator(tabScreenConfig, {
         activeColor: Colors.accentColor,
         shifting: true, //icon büyüyüp kücülüyor //bunu false yapacaksa kötü durur diye ayrıca bir de barStyle keyi ile değer ekliyoruz. ama true olacaksa buna gerek yok shift ile barStyle birlikte calısmaz biri true ise diğeri yok biri varsa diğer false
-
         barStyle: {
           backgroundColor: 'black',
         },
@@ -100,6 +121,9 @@ const MealFavTabNavigator =
         tabBarOptions: {
           inactiveTintColor: 'gray',
           activeTintColor: Colors.accentColor,
+          labelStyle: {
+            fontFamily: 'OpenSans-Regular',
+          },
         },
       });
 
