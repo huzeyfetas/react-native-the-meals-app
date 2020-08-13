@@ -12,6 +12,8 @@ import {CATEGORIES} from '../data/dummy-data';
 import Colors from '../constants/Colors';
 // import {and} from 'react-native-reanimated';
 import CategoryGridItem from '../components/CategoryGridItem';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import HeaderButton from '../components/HeaderButtons';
 
 const CategoriesScreen = props => {
   const renderGridItem = itemData => {
@@ -44,10 +46,22 @@ const CategoriesScreen = props => {
   );
 };
 
-CategoriesScreen.navigationOptions = {
-  headerTitle: 'Kategoriler',
-
-  headerTitleAlign: 'center',
+CategoriesScreen.navigationOptions = navData => {
+  return {
+    headerTitle: 'Kategoriler',
+    headerTitleAlign: 'center',
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName="nav-icon-a"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 
   // headerStyle: {
   //   backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : 'white',
