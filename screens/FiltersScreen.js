@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, Text, View, Switch, Platform} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButtons';
@@ -25,6 +25,23 @@ const FiltersScreen = props => {
   const [isLaktosFree, setIsLaktosFree] = useState(false);
   const [isVeganFree, setIsVeganFree] = useState(false);
   const [isVegeterianFree, setIsVegeterianFree] = useState(false);
+
+  const {navigation} = props;
+
+  const saveFilters = useCallback(() => {
+    const appliedFilters = {
+      glutenFree: isGlutenFree,
+      laktosFree: isLaktosFree,
+      vegan: isVeganFree,
+      isVegeterian: isVegeterianFree,
+    };
+    console.log('appliedFilters', appliedFilters);
+  }, [isGlutenFree, isLaktosFree, isVeganFree, isVegeterianFree]);
+
+  useEffect(() => {
+    navigation.setParams({save: saveFilters}); // save keyi ile saveFilters metodunu point ettik. bu navigasyon nesnesine gitmesine izin verir. yani elimizdeki güncel stateleri gider navigasyon nesnesinde save keywordu ile set eder.
+  }, [saveFilters]);
+
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Available Filters</Text>
@@ -64,6 +81,15 @@ FiltersScreen.navigationOptions = navData => {
           onPress={() => {
             navData.navigation.toggleDrawer();
           }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Save"
+          iconName="save"
+          onPress={navData.navigation.getParam('save')}
         />
       </HeaderButtons>
     ),
