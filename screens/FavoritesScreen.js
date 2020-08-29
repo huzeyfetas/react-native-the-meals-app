@@ -5,9 +5,15 @@ import {MEALS} from '../data/dummy-data';
 
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButtons';
+import {useSelector} from 'react-redux';
 
 const FavoritesScreen = props => {
-  const FavMeals = MEALS.filter(meal => meal.id === 'm1' || meal.id === 'm2');
+  const FavMeals = useSelector(state => state.meals.favoritedMeals);
+
+  // const FavMeals = availableMeals.filter(
+  //   meal => meal.id === 'm1' || meal.id === 'm2',
+  // ); damyy datadan geldi
+
   return <MealList listData={FavMeals} navigation={props.navigation} />;
 };
 

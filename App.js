@@ -10,14 +10,25 @@ import {
 } from 'react-native';
 import MealsNavigator from './navigation/MealsNavigator';
 import {enableScreens} from 'react-native-screens';
+import mealReducer from './store/reducers/meal';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+
+const rootReducer = combineReducers({
+  meals: mealReducer,
+});
+
+const store = createStore(rootReducer);
 
 enableScreens();
 //bu enableScreen ile sanki bir ekran geçiş efekti değişti ?
 
 const App: () => React$Node = () => {
-  return <MealsNavigator />;
+  return (
+    <Provider store={store}>
+      <MealsNavigator />
+    </Provider>
+  );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;
